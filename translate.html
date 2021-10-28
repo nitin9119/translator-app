@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: whitesmoke;
+        }
+        #cont{
+            border:1px solid black;
+            width:60%;
+            height: 500px;
+            padding-left:100px;
+            margin: auto;
+            background-color: #F1F8E9;
+            box-shadow:
+            inset 0 -3em 3em rgba(0,0,0,0.1),
+             0.3em 0.3em 1em rgba(0,0,0,0.3);
+            
+            border-radius: 5px;
+        }
+        #cont>h1{
+            justify-content: space-evenly;
+            color: #1A237E;
+        }
+        #cont>input,button{
+            margin-left: 290px;
+            margin-top: 6px;
+        }
+        input{
+            background-color: #E0F7FA;
+        }
+      
+        #appnd{
+            margin-top: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div id="cont">
+        <h1>Translator app</h1>
+       
+
+
+
+<div style="display: flex;">
+
+    
+    <div>
+
+        <label>From Language :</label>
+        <select id="mySelect"> 
+            <option value="en">English</option> 
+            <option value="hi">Hindi</option> 
+            <option value="ar">Arabic</option> 
+            <option value="zh">Chinese</option> 
+            <option value="fr">french</option> 
+            <option value="de">German</option> 
+            <option value="id">Indonesian</option> 
+            <option value="ko">Korean</option> 
+            <option value="ru">Russian</option> 
+        </select>       
+         
+        <div style="width:300px;height: 300px;border: 1px solid black; border-radius: 5px;margin-top: 25px;background-color: whitesmoke;" >
+            
+        <input id="text" style="border: none; outline: none; font-size: 20px;margin-top: 10px;margin-left: 10px;background-color: whitesmoke;" placeholder="Type here">   
+        
+        </div>
+        
+    </div>
+    
+<div>
+    
+    <label>To Language :</label>
+        <select id="toSelect"> 
+            <option value="en">English</option> 
+            <option value="hi">Hindi</option> 
+            <option value="es">spanish</option>
+            <option value="ar">Arabic</option> 
+            <option value="zh">Chinese</option> 
+            <option value="fr">french</option> 
+            <option value="de">German</option> 
+            <option value="id">Indonesian</option> 
+            <option value="ko">Korean</option> 
+            <option value="ru">Russian</option>  
+        </select>       
+         
+    <div id="appnd" style="width: 300px; height: 300px; background-color: whitesmoke;border: 1px solid black;border-radius: 5px; margin-left: 80px;"></div>
+
+</div>
+    
+
+</div>     
+
+<button onclick="myFunction()"> 
+    Translate
+  </button>
+    </div>
+
+</body>
+</html>
+<script>
+let cont= document.getElementById("appnd");
+function myFunction() { 
+                var result = document.getElementById("mySelect").value; 
+                var input=document.getElementById("text").value;
+                var result1 = document.getElementById("toSelect").value; 
+
+                Register(result,input,result1)
+            } 
+        
+    
+  
+ async  function Register(lang,text,lang2){
+    
+    const res = await fetch("https://libretranslate.de/translate", {
+	method: "POST",
+	body: JSON.stringify({
+		q: `${text}`,
+		source: `${lang}`,
+		target: `${lang2}`
+	}),
+	headers: { "Content-Type": "application/json" }
+});
+
+let data = await res.json();
+
+console.log('data :>> ', data.translatedText);
+
+cont.innerText=null;
+let p=document.createElement("p");
+p.innerText= data.translatedText;
+p.style.marginLeft="10px";
+cont.append(p);
+
+
+    }
+
+
+
+</script>
